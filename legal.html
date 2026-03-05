@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Información Legal · Campamento Toledo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   CAMPAMENTO TOLEDO 2026
+   Shared Stylesheet
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --gold:    #C9933A;
+  --gold-l:  #F5E6CC;
+  --gold-d:  #8B6520;
+  --gold-hover: #E5A94A;
+  --navy:    #0D1F35;
+  --navy-m:  #1A3A5C;
+  --navy-l:  #2C5282;
+  --sand:    #F7F1E8;
+  --sand-d:  #EDE4D3;
+  --text:    #1A1A2E;
+  --muted:   #5E6572;
+  --white:   #FFFFFF;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--sand);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL
+   ═══════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+.reveal-d4 { transition-delay: 0.32s; }
+.reveal-d5 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════ */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  background: rgba(13, 31, 53, 0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(201,147,58,0.12);
+  transition: box-shadow 0.3s;
+}
+
+.site-nav.scrolled {
+  box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+}
+
+/* Transparent nav for homepage hero */
+.site-nav.nav-transparent {
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+.site-nav.nav-transparent.scrolled {
+  background: rgba(13, 31, 53, 0.97);
+  backdrop-filter: blur(14px);
+  border-bottom-color: rgba(201,147,58,0.12);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  z-index: 110;
+}
+
+.nav-links {
+  display: flex; gap: 28px; list-style: none; align-items: center;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none; font-size: 12px;
+  font-weight: 500; letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.25s;
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 1.5px; background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-cta {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  padding: 9px 22px !important;
+  border-radius: 2px;
+  font-weight: 600 !important;
+  transition: all 0.3s var(--ease-out) !important;
+  letter-spacing: 0.8px !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover {
+  background: var(--gold-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201,147,58,0.3);
+}
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  background: none; border: none; cursor: pointer;
+  width: 30px; height: 22px;
+  position: relative; z-index: 110;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 2px;
+  background: var(--gold);
+  position: absolute; left: 0;
+  transition: all 0.3s var(--ease-out);
+}
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.nav-toggle span:nth-child(3) { bottom: 0; }
+.nav-toggle.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+/* ═══════════════════════════════════════════════
+   COMMON ELEMENTS
+   ═══════════════════════════════════════════════ */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.page-section {
+  padding: 90px 5%;
+  position: relative;
+}
+
+.page-section.bg-white { background: var(--white); }
+.page-section.bg-sand { background: var(--sand); }
+.page-section.bg-navy { background: var(--navy); color: white; }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+  max-width: 680px;
+  margin-left: auto; margin-right: auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+
+.bg-navy .section-title { color: white; }
+
+.section-subtitle {
+  font-size: 16px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.bg-navy .section-subtitle { color: rgba(255,255,255,0.6); }
+
+.section-divider {
+  width: 44px; height: 2px;
+  background: var(--gold);
+  margin: 18px auto 0;
+}
+
+/* Page hero (inner pages) */
+.page-hero {
+  padding: 140px 5% 70px;
+  background: linear-gradient(168deg, #0A1628 0%, #0D1F35 40%, #1A3A5C 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,147,58,0.07) 0%, transparent 65%);
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.page-hero .section-eyebrow { color: var(--gold); }
+
+.page-hero .section-title {
+  color: white;
+  font-size: clamp(32px, 6vw, 52px);
+}
+
+.page-hero .section-subtitle {
+  color: rgba(255,255,255,0.65);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  padding: 16px 5%;
+  background: var(--white);
+  border-bottom: 1px solid var(--sand-d);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+.breadcrumbs a {
+  text-decoration: none;
+  color: var(--navy-m);
+  transition: color 0.2s;
+}
+.breadcrumbs a:hover { color: var(--gold); }
+.breadcrumbs span { margin: 0 8px; opacity: 0.4; }
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 16px 40px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.3s var(--ease-out);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+.btn-primary:hover {
+  background: var(--gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,147,58,0.3);
+}
+.btn-primary:hover::before { transform: translateX(100%); }
+
+.btn-secondary {
+  display: inline-block;
+  background: var(--navy);
+  color: white;
+  padding: 16px 44px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.3s var(--ease-out);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.btn-secondary:hover {
+  background: var(--navy-m);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,31,53,0.25);
+}
+
+/* Content card */
+.content-card {
+  background: var(--sand);
+  padding: 36px 32px;
+  border: 1px solid transparent;
+  transition: all 0.35s var(--ease-out);
+  position: relative;
+}
+.content-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 3px;
+  background: var(--gold);
+  transition: width 0.35s var(--ease-out);
+}
+.content-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(13,31,53,0.06);
+  border-color: rgba(201,147,58,0.15);
+}
+.content-card:hover::before { width: 100%; }
+
+.bg-white .content-card { background: var(--sand); }
+.bg-sand .content-card { background: var(--white); }
+
+.card-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+  margin-bottom: 14px; opacity: 0.7;
+}
+
+.card-title {
+  font-size: 18px; font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.card-text {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Grid layouts */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+/* Prose content */
+.prose {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.prose h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--navy);
+  margin: 40px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gold);
+}
+
+.prose h3:first-child { margin-top: 0; }
+
+.prose p { margin-bottom: 16px; }
+
+.prose ul, .prose ol {
+  padding-left: 20px;
+  margin: 12px 0 20px;
+}
+
+.prose li { margin-bottom: 8px; }
+
+.prose strong { color: var(--text); }
+
+/* Info box */
+.info-box {
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.info-box.blue {
+  background: #E8F1F8;
+  border-left: 4px solid #2171B5;
+  color: #1A4F7A;
+}
+.info-box.red {
+  background: #FADBD8;
+  border-left: 4px solid #C0392B;
+  color: #78281F;
+}
+.info-box.green {
+  background: #D4EFDF;
+  border-left: 4px solid #145A32;
+  color: #145A32;
+}
+
+/* Timeline */
+.timeline-item {
+  margin-bottom: 16px;
+  padding: 28px 32px;
+  background: var(--sand);
+  border-left: 3px solid var(--gold);
+  transition: all 0.3s var(--ease-out);
+}
+.bg-sand .timeline-item { background: var(--white); }
+
+.timeline-item:hover { border-left-width: 5px; }
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-label {
+  display: inline-block;
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-d);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.timeline-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.timeline-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* FAQ */
+.faq-list { max-width: 760px; margin: 0 auto; }
+
+.faq-item {
+  margin-bottom: 4px;
+  background: var(--sand);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+.bg-sand .faq-item { background: var(--white); }
+
+.faq-item.open { box-shadow: 0 4px 16px rgba(13,31,53,0.04); }
+
+.faq-question {
+  width: 100%;
+  padding: 20px 24px;
+  background: none; border: none;
+  text-align: left;
+  font-size: 15px; font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.4;
+}
+.faq-question:hover { background: rgba(201,147,58,0.05); }
+
+.faq-icon {
+  font-size: 20px; font-weight: 300;
+  transition: transform 0.35s var(--ease-out);
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s var(--ease-out), padding 0.4s var(--ease-out);
+  padding: 0 24px;
+  color: var(--muted);
+  font-size: 14px; line-height: 1.75;
+}
+.faq-item.open .faq-answer {
+  max-height: 500px;
+  padding: 0 24px 22px;
+}
+
+/* Price box */
+.price-highlight {
+  text-align: center;
+  padding: 48px 40px;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid rgba(201,147,58,0.5);
+  position: relative;
+}
+.price-highlight::before {
+  content: 'PRECIO ÚNICO';
+  position: absolute; top: -10px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  padding: 0 14px;
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--gold); font-weight: 600;
+}
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 76px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+  margin-bottom: 8px;
+}
+.price-per {
+  color: rgba(255,255,255,0.55);
+  font-size: 13px; text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.includes-list {
+  list-style: none;
+}
+.includes-list li {
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  display: flex; align-items: center; gap: 14px;
+}
+.includes-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.includes-list li:last-child { border-bottom: none; }
+
+/* Steps */
+.step-card {
+  display: flex; gap: 20px;
+  padding: 28px;
+  background: var(--white);
+  border: 1px solid var(--sand-d);
+  transition: all 0.3s var(--ease-out);
+}
+.step-card:hover {
+  border-color: rgba(201,147,58,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,31,53,0.04);
+}
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.step-content h4 {
+  font-size: 16px; font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.step-content p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* CTA Banner */
+.cta-banner {
+  text-align: center;
+  padding: 72px 5%;
+  background: linear-gradient(160deg, var(--sand) 0%, #FEF9F2 100%);
+}
+.cta-box {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 56px 44px;
+  background: var(--white);
+  border: 1px solid var(--sand-d);
+  position: relative;
+}
+.cta-box::before, .cta-box::after {
+  content: '';
+  position: absolute;
+  width: 36px; height: 36px;
+  border-color: var(--gold);
+  border-style: solid;
+}
+.cta-box::before { top: 14px; left: 14px; border-width: 2px 0 0 2px; }
+.cta-box::after { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; }
+
+.cta-box h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+.cta-box p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 32px;
+  line-height: 1.7;
+  max-width: 440px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* Legal tables */
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.legal-table thead td {
+  background: var(--navy);
+  color: white;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+.legal-table tbody td {
+  padding: 10px 14px;
+  border: 1px solid var(--sand-d);
+}
+.legal-table tbody tr:nth-child(even) { background: var(--sand); }
+.legal-table td:first-child { font-weight: 600; }
+
+/* Emergency numbers grid */
+.emergency-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+.emergency-card {
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.emergency-card .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 700;
+}
+.emergency-card .num.small { font-size: 18px; margin-top: 6px; }
+.emergency-card .label {
+  font-size: 11px; opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* Legal nav sidebar */
+.legal-sidebar {
+  position: sticky;
+  top: 88px;
+}
+.legal-sidebar a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--muted);
+  border-left: 2px solid var(--sand-d);
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
+}
+.legal-sidebar a:hover,
+.legal-sidebar a.active {
+  color: var(--navy);
+  border-left-color: var(--gold);
+  background: rgba(201,147,58,0.04);
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════ */
+.site-footer {
+  background: var(--navy);
+  padding: 52px 5% 44px;
+  text-align: center;
+  position: relative;
+}
+.site-footer::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,147,58,0.2), transparent);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.footer-copy {
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.25s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════
+   HOMEPAGE HERO
+   ═══════════════════════════════════════════════ */
+.home-hero {
+  min-height: 100vh;
+  background: linear-gradient(168deg, #0A1628 0%, #0D1F35 30%, #1A3A5C 65%, #0D2137 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 5% 80px;
+  position: relative; overflow: hidden;
+}
+.home-hero::before {
+  content: '';
+  position: absolute;
+  width: 650px; height: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,147,58,0.08) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 840px;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  font-weight: 500;
+  border: 1px solid rgba(201,147,58,0.3);
+  padding: 8px 18px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 7.5vw, 76px);
+  font-weight: 700; color: white;
+  margin-bottom: 24px;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.4s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-info {
+  color: rgba(255,255,255,0.85);
+  font-size: clamp(17px, 2.5vw, 21px);
+  margin-bottom: 12px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.55s forwards;
+}
+
+.hero-org {
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(255,255,255,0.5);
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.65s forwards;
+}
+
+.hero-cta {
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 0.8s forwards;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-out) 1.1s forwards;
+}
+.scroll-hint span {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, rgba(201,147,58,0.5), transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 31, 53, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 105;
+  }
+  .nav-links.open { opacity: 1; pointer-events: all; }
+  .nav-links a {
+    font-size: 15px !important;
+    letter-spacing: 2px;
+    padding: 14px 20px !important;
+  }
+  .nav-cta { margin-top: 12px; }
+  .nav-toggle { display: block; }
+
+  .page-section { padding: 64px 5%; }
+  .page-hero { padding: 120px 5% 56px; }
+  .home-hero { min-height: 100svh; padding: 100px 5% 72px; }
+
+  .grid-3, .grid-2 { grid-template-columns: 1fr; }
+
+  .cta-box { padding: 44px 24px; }
+
+  .emergency-grid { grid-template-columns: 1fr 1fr; }
+
+  .footer-links { flex-direction: column; gap: 14px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(34px, 10vw, 50px); }
+  .price-amount { font-size: 60px; }
+  .step-card { flex-direction: column; gap: 12px; }
+  .emergency-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+<style>
+  .legal-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (max-width: 768px) {
+    .legal-layout { grid-template-columns: 1fr; gap: 0; }
+    .legal-sidebar {
+      position: static;
+      display: flex; gap: 0; flex-wrap: wrap;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--sand-d);
+      padding-bottom: 16px;
+    }
+    .legal-sidebar a {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 14px;
+      font-size: 12px;
+    }
+    .legal-sidebar a:hover,
+    .legal-sidebar a.active {
+      border-left: none;
+      border-bottom-color: var(--gold);
+    }
+  }
+
+  /* Procedure steps inside legal */
+  .procedure-step {
+    display: flex;
+  }
+  .procedure-step .step-n {
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 12px 16px;
+    min-width: 48px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .procedure-step .step-t {
+    padding: 12px 16px;
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .procedure-step:nth-child(odd) .step-t { background: #F0F3F4; }
+  .procedure-step:nth-child(even) .step-t { background: #E8F1F8; }
+
+  .auth-item {
+    display: flex; gap: 14px;
+    padding: 14px; margin-bottom: 8px;
+    align-items: flex-start;
+    background: #E8F1F8;
+  }
+  .auth-item.optional { background: #D4EFDF; }
+  .auth-item .auth-n {
+    color: var(--navy-m);
+    font-weight: 700;
+    font-size: 15px;
+    min-width: 24px;
+  }
+  .auth-item.optional .auth-n { color: #145A32; }
+  .auth-item strong { color: var(--navy); }
+  .auth-item .auth-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Campamento Toledo</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" onclick="closeNav()">Inicio</a></li>
+    <li><a href="informacion.html" onclick="closeNav()">Info</a></li>
+    <li><a href="programa.html" onclick="closeNav()">Programa</a></li>
+    <li><a href="precio.html" onclick="closeNav()">Precio</a></li>
+    <li><a href="faq.html" onclick="closeNav()">FAQ</a></li>
+    <li><a href="inscripcion.html" class="nav-cta" onclick="closeNav()">Inscríbete</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <p class="section-eyebrow">Documentación</p>
+  <h1 class="section-title">Información legal</h1>
+  <p class="section-subtitle">Protección de datos, autorización parental y protocolo de emergencias.</p>
+</div>
+
+<div class="breadcrumbs">
+  <a href="index.html">Inicio</a><span>/</span>Legal
+</div>
+
+<section class="page-section bg-white">
+  <div class="legal-layout">
+
+    <!-- SIDEBAR -->
+    <aside>
+      <nav class="legal-sidebar" id="legalNav">
+        <a href="#privacidad" class="active">Protección de datos</a>
+        <a href="#autorizacion">Autorización parental</a>
+        <a href="#emergencias">Protocolo de emergencias</a>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="prose">
+
+      <!-- ═══ PRIVACIDAD ═══ -->
+      <div id="privacidad">
+        <div class="info-box blue" style="margin-top:0;">
+          Documento elaborado conforme al <strong>RGPD (UE) 2016/679</strong>, la <strong>LO 3/2018 LOPDGDD</strong> y la <strong>LO 1/1996 de Protección Jurídica del Menor</strong>.
+        </div>
+
+        <h3>I. Responsable del Tratamiento</h3>
+        <table class="legal-table">
+          <thead><tr><td>Campo</td><td>Información</td></tr></thead>
+          <tbody>
+            <tr><td>Denominación</td><td>Iglesia de la Santidad Pentecostal España</td></tr>
+            <tr><td>Actividad</td><td>Organización y gestión del Campamento Toledo 2026</td></tr>
+            <tr><td>Ámbito</td><td>España (con participación de ciudadanos italianos)</td></tr>
+          </tbody>
+        </table>
+
+        <h3>II. Finalidad del Tratamiento</h3>
+        <p>Los datos facilitados se tratarán exclusivamente para:</p>
+        <ol>
+          <li><strong>Gestión de inscripción:</strong> Registro, control de participantes y comunicación del estado.</li>
+          <li><strong>Gestión de pago:</strong> Verificación de la cuota de 150€ y emisión de justificantes.</li>
+          <li><strong>Organización logística:</strong> Asignación de habitaciones, grupos y transporte.</li>
+          <li><strong>Salud y seguridad:</strong> Atención sanitaria y gestión de emergencias.</li>
+        </ol>
+
+        <h3>III. Base Legal</h3>
+        <p>El tratamiento se fundamenta en:</p>
+        <ul>
+          <li>Ejecución del contrato de participación (Art. 6.1.b RGPD)</li>
+          <li>Consentimiento explícito del interesado o tutor legal (Art. 6.1.a RGPD)</li>
+          <li>Interés legítimo en garantizar la seguridad (Art. 6.1.f RGPD)</li>
+          <li>Cumplimiento de obligaciones legales (Art. 6.1.c RGPD)</li>
+        </ul>
+
+        <h3>IV. Conservación de Datos</h3>
+        <table class="legal-table">
+          <thead><tr><td>Tipo de dato</td><td>Período de conservación</td></tr></thead>
+          <tbody>
+            <tr><td>Datos generales de inscripción</td><td>1 año tras finalización</td></tr>
+            <tr><td>Autorizaciones parentales (papel)</td><td>5 años (plazo legal de reclamación)</td></tr>
+            <tr><td>Datos económicos</td><td>6 años (obligación fiscal)</td></tr>
+          </tbody>
+        </table>
+
+        <h3>V. Derechos del Interesado</h3>
+        <p>Conforme al RGPD, tienes derecho a:</p>
+        <ul>
+          <li><strong>Acceso:</strong> Conocer qué datos tenemos sobre ti.</li>
+          <li><strong>Rectificación:</strong> Corregir datos inexactos.</li>
+          <li><strong>Supresión:</strong> Solicitar eliminación (derecho al olvido).</li>
+          <li><strong>Limitación:</strong> Restringir el tratamiento.</li>
+          <li><strong>Portabilidad:</strong> Recibir tus datos en formato estructurado.</li>
+          <li><strong>Oposición:</strong> Oponerte al tratamiento.</li>
+        </ul>
+        <p>Para ejercer estos derechos, contacta a <strong>[EMAIL OFICIAL]</strong>. También puedes reclamar ante la Agencia Española de Protección de Datos: <a href="https://www.aepd.es" target="_blank" rel="noopener" style="color:var(--navy-l);">www.aepd.es</a></p>
+      </div>
+
+      <!-- ═══ AUTORIZACIÓN PARENTAL ═══ -->
+      <div id="autorizacion" style="margin-top:64px;">
+        <h3 style="margin-top:0;">Autorización Parental</h3>
+
+        <div class="info-box red">
+          <strong>OBLIGATORIO para menores de 18 años.</strong> Este documento debe entregarse firmado en papel el día de llegada. Sin él no será posible la participación.
+        </div>
+
+        <p style="margin-top:20px;"><strong>Contenido de la autorización:</strong></p>
+        <p>El documento incluye los siguientes apartados que el tutor legal debe cumplimentar:</p>
+
+        <div style="margin:20px 0;">
+          <div class="auth-item">
+            <span class="auth-n">1.</span>
+            <div><strong>Identificación del menor</strong><div class="auth-sub">Nombre completo, DNI/NIE, fecha de nacimiento y domicilio.</div></div>
+          </div>
+          <div class="auth-item">
+            <span class="auth-n">2.</span>
+            <div><strong>Identificación del tutor legal</strong><div class="auth-sub">Nombre completo, DNI, relación de parentesco y contacto.</div></div>
+          </div>
+          <div class="auth-item">
+            <span class="auth-n">3.</span>
+            <div><strong>Autorización de participación</strong><div class="auth-sub">Consentimiento expreso para asistir al campamento.</div></div>
+          </div>
+          <div class="auth-item">
+            <span class="auth-n">4.</span>
+            <div><strong>Información sanitaria</strong><div class="auth-sub">Alergias, medicación habitual, condiciones médicas relevantes.</div></div>
+          </div>
+          <div class="auth-item">
+            <span class="auth-n">5.</span>
+            <div><strong>Autorización actividades acuáticas</strong><div class="auth-sub">Permiso para participar en actividades de piscina supervisadas.</div></div>
+          </div>
+          <div class="auth-item optional">
+            <span class="auth-n">6.</span>
+            <div><strong>Uso de imágenes (OPCIONAL)</strong><div class="auth-sub">Autorización para fotografías/vídeos con fines de comunicación interna.</div></div>
+          </div>
+          <div class="auth-item">
+            <span class="auth-n">7.</span>
+            <div><strong>Veracidad de datos</strong><div class="auth-sub">Confirmación de que toda la información facilitada es verídica.</div></div>
+          </div>
+        </div>
+
+        <h3>Cómo obtener el documento</h3>
+        <p>El documento completo en formato Word para imprimir, completar y firmar está disponible solicitándolo por email a <strong>[EMAIL OFICIAL]</strong>. Te lo enviaremos en un plazo máximo de 24 horas.</p>
+
+        <div class="info-box green">
+          El documento debe entregarse en papel el día de llegada al campamento. Conserva una copia para ti.
+        </div>
+      </div>
+
+      <!-- ═══ EMERGENCIAS ═══ -->
+      <div id="emergencias" style="margin-top:64px;">
+        <h3 style="margin-top:0;">Protocolo de Emergencias</h3>
+
+        <div class="info-box red">
+          <strong>En caso de emergencia llama siempre primero al 112.</strong> El protocolo interno completo para monitores está disponible en el equipo organizador.
+        </div>
+
+        <h3>Números de Emergencia</h3>
+        <div class="emergency-grid">
+          <div class="emergency-card" style="background:#C0392B;">
+            <div class="num">112</div>
+            <div class="label">Emergencias generales</div>
+          </div>
+          <div class="emergency-card" style="background:#922B21;">
+            <div class="num small">925 269 200</div>
+            <div class="label">Hospital Virgen de la Salud</div>
+          </div>
+          <div class="emergency-card" style="background:#1A4F7A;">
+            <div class="num">080</div>
+            <div class="label">Bomberos Toledo</div>
+          </div>
+          <div class="emergency-card" style="background:#145A32;">
+            <div class="num">092</div>
+            <div class="label">Policía Local</div>
+          </div>
+        </div>
+
+        <h3>Procedimiento básico</h3>
+        <div style="display:flex;flex-direction:column;gap:4px;margin:16px 0;">
+          <div class="procedure-step">
+            <div class="step-n">1</div>
+            <div class="step-t"><strong>Mantén la calma.</strong> No muevas al accidentado salvo peligro inmediato.</div>
+          </div>
+          <div class="procedure-step">
+            <div class="step-n">2</div>
+            <div class="step-t"><strong>Llama al 112.</strong> Identifícate, indica ubicación exacta y describe la situación.</div>
+          </div>
+          <div class="procedure-step">
+            <div class="step-n">3</div>
+            <div class="step-t"><strong>Avisa al responsable</strong> sanitario y al director del campamento.</div>
+          </div>
+          <div class="procedure-step">
+            <div class="step-n">4</div>
+            <div class="step-t"><strong>Contacta al tutor legal</strong> si el afectado es menor de edad.</div>
+          </div>
+          <div class="procedure-step">
+            <div class="step-n">5</div>
+            <div class="step-t"><strong>Documenta</strong> la hora, lo ocurrido y las acciones tomadas.</div>
+          </div>
+        </div>
+
+        <h3>Situaciones específicas</h3>
+
+        <p><strong>Accidente en piscina:</strong> sacar al accidentado del agua si es seguro hacerlo, avisar al socorrista, llamar al 112 si es necesario. No dejar al accidentado solo en ningún momento.</p>
+
+        <p><strong>Golpe de calor:</strong> llevar a la persona a la sombra, refrescar con agua fresca (no helada), dar de beber agua a pequeños sorbos si está consciente, y llamar al 112 si los síntomas no mejoran.</p>
+
+        <p><strong>Crisis epiléptica:</strong> apartar objetos cercanos, no introducir nada en la boca, colocar de lado (posición lateral de seguridad) y cronometrar la duración. Si dura más de 5 minutos, llamar al 112.</p>
+
+        <p><strong>Reacción anafiláctica:</strong> administrar adrenalina autoinyectable si el participante la porta y está prescrita, llamar inmediatamente al 112, y mantener al afectado en posición cómoda.</p>
+
+        <div style="background:var(--navy);padding:18px;text-align:center;margin-top:24px;">
+          <div style="color:var(--gold);font-size:13px;font-weight:600;letter-spacing:0.3px;">Botiquín disponible en todo momento · Hospital de referencia: Virgen de la Salud, Toledo</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-logo">Campamento Toledo 2026</div>
+  <div class="footer-copy">&copy; 2026 Iglesia de la Santidad Pentecostal España</div>
+  <div class="footer-links">
+    <a href="legal.html#privacidad">Protección de datos</a>
+    <a href="legal.html#autorizacion">Autorización parental</a>
+    <a href="legal.html#emergencias">Protocolo de emergencias</a>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   CAMPAMENTO TOLEDO 2026 — Shared JS
+   ═══════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  /* ── Nav scroll effect ── */
+  var nav = document.querySelector('.site-nav');
+  if (nav) {
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+  }
+
+  /* ── Mobile menu ── */
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if (toggle && links) {
+    toggle.addEventListener('click', function () {
+      toggle.classList.toggle('open');
+      links.classList.toggle('open');
+      document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+    });
+  }
+
+  window.closeNav = function () {
+    if (toggle && links) {
+      toggle.classList.remove('open');
+      links.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  };
+
+  /* ── Scroll reveal ── */
+  var reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    reveals.forEach(function (el) { obs.observe(el); });
+  }
+
+  /* ── FAQ toggle ── */
+  window.toggleFaq = function (btn) {
+    var item = btn.parentElement;
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  };
+
+  /* ── Active nav link ── */
+  var currentPage = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      a.classList.add('active');
+    }
+  });
+
+})();
+
+</script>
+<script>
+/* Legal sidebar active on scroll */
+(function() {
+  var sections = ['privacidad', 'autorizacion', 'emergencias'];
+  var links = document.querySelectorAll('#legalNav a');
+
+  function updateActive() {
+    var scrollPos = window.scrollY + 120;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      var el = document.getElementById(sections[i]);
+      if (el && el.offsetTop <= scrollPos) {
+        links.forEach(function(l) { l.classList.remove('active'); });
+        links[i].classList.add('active');
+        return;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+
+  /* Handle hash on load */
+  if (location.hash) {
+    var target = document.querySelector(location.hash);
+    if (target) {
+      setTimeout(function() {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }, 100);
+    }
+  }
+})();
+</script>
+</body>
+</html>
