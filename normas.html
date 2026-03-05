@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Normas Campamento Toledo 2026 · Iglesia de la Santidad Pentecostal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:    #C9933A;
+    --gold-l:  #F5E6CC;
+    --gold-d:  #8B6520;
+    --navy:    #0D1F35;
+    --navy-m:  #1A3A5C;
+    --navy-l:  #2C5282;
+    --sand:    #F7F1E8;
+    --sand-d:  #EDE4D3;
+    --text:    #1A1A2E;
+    --muted:   #6B7280;
+    --white:   #FFFFFF;
+    --red:     #C0392B;
+    --green:   #1E6B3A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    background: rgba(13, 31, 53, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 147, 58, 0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 500 !important;
+    transition: all 0.2s !important;
+  }
+  .nav-cta:hover { background: #E5A94A !important; color: var(--navy) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #0D1F35 0%, #1A3A5C 45%, #0D2137 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 5% 60px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,147,58,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 8vw, 72px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .hero .eyebrow {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.8);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── CONTENT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 5%;
+    position: relative; z-index: 1;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 28px 0 16px 0;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-subtitle {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+
+  .rule-list li {
+    padding: 12px 0 12px 24px;
+    position: relative;
+    line-height: 1.6;
+    color: var(--text);
+    border-bottom: 1px solid rgba(13, 31, 53, 0.1);
+  }
+
+  .rule-list li:before {
+    content: '▪';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: bold;
+  }
+
+  .rule-list li:last-child {
+    border-bottom: none;
+  }
+
+  .highlight-box {
+    background: rgba(201, 147, 58, 0.08);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+
+  .highlight-box strong {
+    color: var(--gold);
+  }
+
+  .danger-box {
+    background: rgba(192, 57, 43, 0.08);
+    border-left: 4px solid var(--red);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+
+  .danger-box strong {
+    color: var(--red);
+  }
+
+  .success-box {
+    background: rgba(30, 107, 58, 0.08);
+    border-left: 4px solid var(--green);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+
+  .success-box strong {
+    color: var(--green);
+  }
+
+  .footer-content {
+    background: var(--navy);
+    color: var(--white);
+    padding: 40px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .footer-content p {
+    margin: 8px 0;
+    line-height: 1.6;
+  }
+
+  .footer-content .date {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 4%;
+    }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 11px; }
+    .container { padding: 60px 4%; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CAMPAMENTO TOLEDO 2026</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="informacion.html">Información</a></li>
+    <li><a href="normas.html" style="color: var(--gold);">Normas</a></li>
+    <li><a href="inscripcion.html">Inscripción</a></li>
+    <li><a href="legal.html">Legal</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Convivencia y Seguridad</div>
+    <h1>Normas Oficiales del Campamento</h1>
+    <p>Normas generales para asegurar una experiencia segura, respetuosa y enriquecedora para todos los campistas</p>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <div class="section">
+    <div class="section-subtitle">31 de Julio - 2 de Agosto, 2026 · Toledo</div>
+    <div class="highlight-box">
+      <strong>Estas normas</strong> tienen como fin mejorar la convivencia, seguridad y experiencia espiritual de todos los campistas. Entendemos que el campamento es una experiencia grupal y todos nos comprometemos a poner de nuestra parte para que sea un ambiente amigable y respetuoso.
+    </div>
+  </div>
+
+  <!-- COMPORTAMIENTO GENERAL -->
+  <div class="section">
+    <h2>Comportamiento General</h2>
+    
+    <h3>Respeto y Autoridad</h3>
+    <p>Los campistas deberán respetar a todos los líderes, monitores y autoridades del campamento, sin importar si pertenecen o no a su iglesia local.</p>
+
+    <h3>Conductas Prohibidas</h3>
+    <ul class="rule-list">
+      <li><strong>Fumar:</strong> No se permite en ningún área del predio.</li>
+      <li><strong>Consumo de alcohol o drogas:</strong> Absolutamente prohibido.</li>
+      <li><strong>Salir de las habitaciones:</strong> Fuera del horario permitido.</li>
+      <li><strong>Parejas aisladas:</strong> Se prohíben conductas románticas inapropiadas.</li>
+      <li><strong>Música no cristiana:</strong> No se permite escuchar música con mensajes contrarios a los valores del campamento.</li>
+      <li><strong>Salida del área:</strong> No se permite salir fuera de las instalaciones sin autorización y acompañamiento de monitores.</li>
+    </ul>
+
+    <h3>Participación Obligatoria</h3>
+    <p>Todos los participantes se comprometen a participar activamente en todas las actividades programadas. No está permitido quedarse en las habitaciones sin autorización.</p>
+
+    <div class="danger-box">
+      <strong>⚠️ Consecuencias graves:</strong> El incumplimiento grave de las normas podrá implicar la expulsión del campamento, previa notificación a los padres o responsables de la Iglesia Local.
+    </div>
+  </div>
+
+  <!-- HORARIOS Y DESCANSO -->
+  <div class="section">
+    <h2>Horarios y Descanso</h2>
+    
+    <p>Se deberá respetar en todo momento:</p>
+
+    <h3>Horarios de Silencio</h3>
+    <p>Es obligatorio respetar los horarios de silencio y descanso establecidos. Esto garantiza el bienestar de todos.</p>
+
+    <h3>Actividades Espirituales</h3>
+    <p>La asistencia es obligatoria a los tiempos de devocional, oración y actividades diarias programadas.</p>
+
+    <h3>Horarios de Comidas</h3>
+    <ul class="rule-list">
+      <li><strong>Desayuno:</strong> 09:00</li>
+      <li><strong>Comida:</strong> 14:00</li>
+      <li><strong>Merienda:</strong> 17:30</li>
+      <li><strong>Cena:</strong> 21:30</li>
+    </ul>
+
+    <p style="margin-top: 16px; color: var(--muted); font-size: 13px;">Todos los horarios son de cumplimiento obligatorio para mantener la estructura del campamento.</p>
+  </div>
+
+  <!-- VESTIMENTA -->
+  <div class="section">
+    <h2>Código de Vestimenta</h2>
+    
+    <h3>Principios Generales</h3>
+    <p>La ropa debe ser modesta, cómoda y apropiada para un entorno cristiano y colectivo.</p>
+
+    <h3>Fuera de la Piscina</h3>
+    <p>No está permitido estar con bañador o el torso descubierto fuera del área de piscina.</p>
+
+    <h3>En la Piscina</h3>
+    <ul class="rule-list">
+      <li><strong>Bañador discreto:</strong> No provocativo, sin transparencias.</li>
+      <li><strong>Short de piscina:</strong> Obligatorio para todos los participantes.</li>
+      <li><strong>Gorro o cabello recogido:</strong> Obligatorio para el cabello largo.</li>
+      <li><strong>Ducha previa:</strong> Es obligatorio ducharse antes de ingresar al agua.</li>
+      <li><strong>Prohibido en piscina:</strong> Comida, bebidas, objetos de cristal o juegos bruscos.</li>
+    </ul>
+  </div>
+
+  <!-- CUIDADO DE INSTALACIONES -->
+  <div class="section">
+    <h2>Cuidado de Instalaciones y Seguridad</h2>
+    
+    <h3>Responsabilidad Compartida</h3>
+    <ul class="rule-list">
+      <li>No se permite mover el mobiliario sin autorización.</li>
+      <li>Está prohibido entrar en zonas restringidas, como las ruinas o áreas en obras.</li>
+      <li>Se prohíbe extraer plantas o frutos del entorno natural.</li>
+      <li>No se permite manipular el sistema de filtrado de la piscina.</li>
+      <li>No se permite el uso de aparatos eléctricos externos sin aprobación.</li>
+      <li>Toda basura deberá tirarse en los contenedores correspondientes.</li>
+    </ul>
+
+    <h3>Responsabilidad por Daños</h3>
+    <div class="danger-box">
+      <strong>Importante:</strong> La organización no se hace responsable por pérdida de objetos de valor o dinero. Cualquier daño intencional a las instalaciones será responsabilidad del participante o su tutor.
+    </div>
+  </div>
+
+  <!-- INSTALACIONES COMUNES -->
+  <div class="section">
+    <h2>Uso de Instalaciones Comunes y Dispositivos</h2>
+    
+    <h3>Comedor</h3>
+    <p>El comedor será usado exclusivamente para las comidas. No está permitido permanecer en la zona fuera de los horarios establecidos.</p>
+
+    <h3>Kiosco</h3>
+    <p>El kiosco tiene a disposición bebidas, helados y golosinas. Consulta con los monitores sobre los horarios disponibles.</p>
+
+    <h3>Dispositivos Móviles</h3>
+    <p>En caso de utilizar dispositivos móviles, se recomienda su utilización limitada, evitando su uso durante las actividades grupales, especialmente en los momentos de búsqueda del Señor (devocionales y oraciones).</p>
+  </div>
+
+  <!-- COMPROMISO FINAL -->
+  <div class="section">
+    <h2>Compromiso de los Campistas</h2>
+    
+    <div class="success-box">
+      <p><strong>Entendemos que el campamento es una experiencia grupal</strong> y todos nos comprometemos a poner de nuestra parte para que sea un ambiente:</p>
+      <ul style="margin: 12px 0 0 0; padding-left: 20px;">
+        <li>Amigable y respetuoso</li>
+        <li>Seguro para todos</li>
+        <li>Que invita a disfrutar de la presencia del Señor</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Reconocimiento:</strong> La asistencia al campamento se considera conocimiento previo y aceptación en su totalidad de las normas aquí establecidas.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-content">
+    <p style="font-size: 16px; margin-bottom: 12px;">CAMPAMENTO TOLEDO 2026</p>
+    <p class="date">31 de Julio - 2 de Agosto</p>
+    <p>Iglesia de la Santidad Pentecostal · Toledo, España</p>
+    <p style="margin-top: 16px; font-size: 13px; opacity: 0.8;">¡Disfruta lo que el Señor tiene para ti en este tiempo!</p>
+  </div>
+
+</div>
+
+</body>
+</html>
