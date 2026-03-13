@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campamento Toledo 2026 — Dashboard</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --navy-light: #243459;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --bg: #f5f0e8;
+      --white: #ffffff;
+      --shadow: 0 2px 16px rgba(26,39,68,0.10);
+      --shadow-hover: 0 6px 24px rgba(26,39,68,0.18);
+      --radius: 12px;
+      --red: #c62828;
+      --red-bg: #ffebee;
+      --green: #2e7d32;
+      --green-bg: #e8f5e9;
+      --blue: #1565c0;
+      --blue-bg: #e3f2fd;
+      --purple: #6a1b9a;
+      --purple-bg: #f3e5f5;
+      --orange: #e65100;
+      --orange-bg: #fff3e0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-icon {
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .header-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      color: var(--gold);
+      font-size: 14px;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .header-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .btn-refresh {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-refresh:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-refresh:active { transform: translateY(0); }
+    .btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-refresh .spin { display: none; }
+    .btn-refresh.loading .spin { display: inline; animation: spin 0.7s linear infinite; }
+    .btn-refresh.loading .icon { display: none; }
+
+    /* ── CONTAINER ──────────────────────────────────── */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 36px 48px;
+    }
+
+    /* ── SECTION ────────────────────────────────────── */
+    .section { margin-bottom: 44px; }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    /* ── METRIC CARDS ───────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 24px 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: var(--shadow-hover); }
+
+    .card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: var(--gold);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .card-accent.red { background: var(--red); }
+    .card-accent.green { background: var(--green); }
+    .card-accent.blue { background: var(--blue); }
+
+    .card-label {
+      font-size: 11px;
+      color: #888;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-value {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+      margin: 10px 0 4px;
+      letter-spacing: -2px;
+    }
+
+    .card-value.alert { color: var(--red); }
+    .card-value.ok { color: var(--green); }
+
+    .card-sub {
+      font-size: 13px;
+      color: #999;
+    }
+
+    .progress-wrap { margin-top: 14px; }
+
+    .progress-track {
+      background: #ede8de;
+      border-radius: 6px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 6px;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── STATUS BARS ────────────────────────────────── */
+    .status-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .bar-row:last-child { margin-bottom: 0; }
+
+    .bar-label {
+      width: 110px;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+      color: var(--navy);
+    }
+
+    .bar-track {
+      flex: 1;
+      background: #ede8de;
+      border-radius: 8px;
+      height: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .bar-count-label {
+      width: 36px;
+      text-align: right;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    /* ── DISTRIBUTION ───────────────────────────────── */
+    .dist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .dist-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .dist-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+
+    .dist-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .dist-item:last-child { margin-bottom: 0; }
+
+    .dist-name {
+      flex: 0 0 140px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dist-track {
+      flex: 1;
+      background: #ede8de;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .dist-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+
+    .dist-n {
+      flex-shrink: 0;
+      font-weight: 800;
+      font-size: 14px;
+      width: 28px;
+      text-align: right;
+      color: var(--navy);
+    }
+
+    /* ── ALERTS ─────────────────────────────────────── */
+    .alerts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .alert-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .alert-head {
+      padding: 13px 20px;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .alert-head span.alert-title { display: flex; align-items: center; gap: 6px; }
+
+    .alert-head .count {
+      background: rgba(0,0,0,0.12);
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 12px;
+    }
+
+    .ah-red { background: var(--red-bg); color: var(--red); }
+    .ah-orange { background: var(--orange-bg); color: var(--orange); }
+    .ah-blue { background: var(--blue-bg); color: var(--blue); }
+    .ah-purple { background: var(--purple-bg); color: var(--purple); }
+
+    .alert-body {
+      max-height: 210px;
+      overflow-y: auto;
+      padding: 6px 0;
+    }
+
+    .alert-row {
+      padding: 9px 20px;
+      font-size: 13px;
+      border-bottom: 1px solid #f5f0ec;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .alert-row:last-child { border-bottom: none; }
+    .alert-row strong { color: var(--navy); }
+    .alert-row .detail { color: #888; font-size: 12px; margin-top: 1px; }
+
+    .alert-empty {
+      padding: 18px 20px;
+      font-size: 13px;
+      color: #bbb;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ── TABLES ─────────────────────────────────────── */
+    .table-wrap {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead { background: var(--navy); }
+
+    th {
+      padding: 13px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: rgba(255,255,255,0.85);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid #f0ebe0;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr { transition: background 0.1s; }
+    tbody tr:hover td { background: #faf7f0; }
+
+    .td-name { font-weight: 600; color: var(--navy); }
+    .td-sub { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    /* ── BADGES ─────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      letter-spacing: 0.2px;
+    }
+
+    .b-red    { background: var(--red-bg);    color: var(--red); }
+    .b-blue   { background: var(--blue-bg);   color: var(--blue); }
+    .b-purple { background: var(--purple-bg); color: var(--purple); }
+    .b-green  { background: var(--green-bg);  color: var(--green); }
+    .b-orange { background: var(--orange-bg); color: var(--orange); }
+    .b-gray   { background: #f0ebe0;          color: #888; }
+    .b-gold   { background: #fdf3dd;          color: #8a6a1a; }
+
+    /* ── FILTERS ────────────────────────────────────── */
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 9px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      background: var(--white);
+      color: var(--navy);
+      cursor: pointer;
+      outline: none;
+      font-weight: 500;
+      transition: border-color 0.2s;
+    }
+
+    .filter-select:focus, .filter-select:hover { border-color: var(--gold); }
+
+    /* ── LOADING & ERRORS ───────────────────────────── */
+    .loading-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      gap: 18px;
+      color: #888;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid #ede8de;
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-box {
+      background: var(--red-bg);
+      border: 1.5px solid #ffcdd2;
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      color: var(--red);
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .error-box strong { font-size: 16px; display: block; margin-bottom: 8px; }
+    .error-box small { color: #c62828; opacity: 0.7; font-size: 12px; }
+
+    .empty-row td { text-align: center; color: #bbb; font-style: italic; padding: 28px; }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .dist-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .header { flex-direction: column; gap: 18px; padding: 20px 24px; text-align: center; }
+      .header-right { align-items: center; }
+      .container { padding: 20px 20px; }
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+      .dist-grid { grid-template-columns: 1fr; }
+      .alerts-grid { grid-template-columns: 1fr; }
+      .dist-name { flex: 0 0 100px; }
+    }
+
+    @media (max-width: 480px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .header-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SECTION 1: CABECERA ──────────────────────────────────── -->
+<header class="header">
+  <div class="header-logo">
+    <div class="header-icon">⛺</div>
+    <div>
+      <div class="header-title">Campamento Toledo 2026</div>
+      <div class="header-subtitle">31 julio – 2 agosto · Toledo, España</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="last-updated" id="lastUpdated">Sin datos cargados</div>
+    <button class="btn-refresh" id="btnRefresh" onclick="loadDashboard()">
+      <span class="icon">↻</span>
+      <span class="spin">⟳</span>
+      Actualizar datos
+    </button>
+  </div>
+</header>
+
+<!-- Contenido principal -->
+<div class="container" id="dashContent">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <span>Conectando con Notion…</span>
+  </div>
+</div>
+
+<script>
+  /* ── CONFIGURACIÓN ────────────────────────────────────────── */
+  const PLAZAS = 100;
+
+  /* ── API PROXY ────────────────────────────────────────────── */
+  async function fetchAll() {
+    const results = [];
+    let cursor = null;
+
+    do {
+      const body = { page_size: 100 };
+      if (cursor) body.start_cursor = cursor;
+
+      const res = await fetch('/api/notion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.message || e.error || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      results.push(...data.results);
+      cursor = data.has_more ? data.next_cursor : null;
+    } while (cursor);
+
+    return results;
+  }
+
+  /* ── PARSE RECORD ─────────────────────────────────────────── */
+  function parse(page) {
+    const p = page.properties;
+
+    const txt  = k => p[k]?.title?.map(t=>t.plain_text).join('') || p[k]?.rich_text?.map(t=>t.plain_text).join('') || '';
+    const sel  = k => p[k]?.select?.name || '';
+    const msel = k => (p[k]?.multi_select||[]).map(o=>o.name).join(', ');
+    const chk  = k => !!p[k]?.checkbox;
+    const ph   = k => p[k]?.phone_number || '';
+    const em   = k => p[k]?.email || '';
+    const dt   = k => p[k]?.date?.start || '';
+    const fml  = k => {
+      const f = p[k]?.formula;
+      if (!f) return null;
+      return f.type === 'number' ? f.number : f.type === 'string' ? f.string : null;
+    };
+
+    return {
+      id:          page.id,
+      nombre:      txt('Nombre completo'),
+      estado:      sel('Estado inscripción'),
+      pago:        sel('¿Has realizado ya el pago?'),
+      metodoPago:  msel('Método de pago elegido'),
+      autorizado:  chk('Autorización entregada'),
+      alergia:     sel('¿Alergia alimentaria?'),
+      cualAlergia: txt('¿Cuál alergia?'),
+      condicion:   sel('¿Condición médica?'),
+      condDesc:    txt('Describe condición médica'),
+      medicacion:  sel('¿Medicación habitual?'),
+      medicDesc:   txt('Nombre dosis y frecuencia'),
+      nada:        sel('¿Sabes nadar?'),
+      pais:        sel('País de residencia'),
+      grupo:       fml('Grupo') || '',
+      edad:        fml('Edad'),
+      genero:      sel('Género'),
+      iglesia:     txt('Iglesia local de procedencia'),
+      completitud: fml('Completitud %'),
+      telefono:    ph('Teléfono móvil'),
+      email:       em('Email personal'),
+      nacimiento:  dt('Fecha de nacimiento'),
+    };
+  }
+
+  /* ── BADGE HELPERS ────────────────────────────────────────── */
+  const ESTADO_BADGE = {
+    'Incompleta': 'b-red',
+    'Pendiente':  'b-blue',
+    'Confirmada': 'b-purple',
+    'Hecho':      'b-green'
+  };
+
+  const ESTADO_COLOR = {
+    'Incompleta': '#e53935',
+    'Pendiente':  '#1565c0',
+    'Confirmada': '#6a1b9a',
+    'Hecho':      '#2e7d32'
+  };
+
+  const GRUPO_BADGE = {
+    'Júnior (12-14)':      'b-blue',
+    'Intermedio (15-17)':  'b-purple',
+    'Adulto (18+)':        'b-gray'
+  };
+
+  const badge = (text, cls) => text ? `<span class="badge ${cls}">${text}</span>` : '—';
+
+  const bEstado = e => badge(e || '—', ESTADO_BADGE[e] || 'b-gray');
+
+  const bPago = p => {
+    if (p === 'Sí') return badge('✓ Sí', 'b-green');
+    if (p === 'No') return badge('✗ No', 'b-red');
+    if (p && p.includes('5 días')) return badge('En 5 días', 'b-orange');
+    return '—';
+  };
+
+  const bAutorizacion = b => b ? badge('✓ Entregada', 'b-green') : badge('⏳ Pendiente', 'b-orange');
+
+  const bGrupo = g => badge(g, GRUPO_BADGE[g] || 'b-gray');
+
+  /* ── COUNT HELPER ─────────────────────────────────────────── */
+  const count = (arr, fn) => arr.filter(fn).length;
+  const group = (arr, fn) => arr.reduce((acc, r) => { const k = fn(r)||'—'; acc[k]=(acc[k]||0)+1; return acc; }, {});
+
+  /* ── RENDER ───────────────────────────────────────────────── */
+  function render(records) {
+    const total     = records.length;
+    const pct       = total > 0 ? Math.round((total / PLAZAS) * 100) : 0;
+    const confirm   = count(records, r => r.estado==='Confirmada' || r.estado==='Hecho');
+    const pagoPend  = count(records, r => r.pago !== 'Sí');
+    const autPend   = count(records, r => !r.autorizado);
+
+    const byEstado  = group(records, r => r.estado || 'Incompleta');
+    const byPais    = group(records, r => r.pais   || 'Sin especificar');
+    const byGrupo   = group(records, r => r.grupo  || 'Sin especificar');
+    const byGenero  = group(records, r => r.genero || 'Sin especificar');
+
+    const alergias  = records.filter(r => r.alergia   === 'Sí');
+    const conds     = records.filter(r => r.condicion === 'Sí');
+    const meds      = records.filter(r => r.medicacion=== 'Sí');
+    const noNadan   = records.filter(r => r.nada      === 'No');
+
+    /* ── DISTRIBUCIÓN bars ───────────────────────────────────── */
+    const distBars = (data, colors, keys) => {
+      const entries = keys
+        ? keys.map(k => [k, data[k]||0])
+        : Object.entries(data).sort((a,b)=>b[1]-a[1]);
+      if (!entries.length) return '<div class="alert-empty">Sin datos</div>';
+      const max = Math.max(...entries.map(e=>e[1]), 1);
+      return entries.map(([k, n], i) => `
+        <div class="dist-item">
+          <div class="dist-name" title="${k}">${k}</div>
+          <div class="dist-track">
+            <div class="dist-fill" style="width:${(n/max)*100}%;background:${Array.isArray(colors)?colors[i%colors.length]:colors}"></div>
+          </div>
+          <div class="dist-n">${n}</div>
+        </div>`).join('');
+    };
+
+    /* ── ALERT LISTS ─────────────────────────────────────────── */
+    const alertList = (arr, detailFn) => {
+      if (!arr.length) return '<div class="alert-empty">Sin casos registrados</div>';
+      return arr.map(r => {
+        const detail = detailFn(r);
+        return `<div class="alert-row">
+          <div>
+            <strong>${r.nombre || '—'}</strong>
+            ${detail ? `<div class="detail">${detail}</div>` : ''}
+          </div>
+          ${bGrupo(r.grupo)}
+        </div>`;
+      }).join('');
+    };
+
+    /* ── TABLA INSCRITOS ─────────────────────────────────────── */
+    window.__records = records;
+
+    const tableRows = (list) => {
+      if (!list.length) return `<tr class="empty-row"><td colspan="8">Sin registros para estos filtros</td></tr>`;
+      return list.map(r => `
+        <tr data-estado="${r.estado}" data-grupo="${r.grupo}">
+          <td><div class="td-name">${r.nombre || '—'}</div><div class="td-sub">${r.email}</div></td>
+          <td>${r.edad !== null && r.edad !== undefined ? r.edad : '—'}</td>
+          <td>${bGrupo(r.grupo)}</td>
+          <td>${r.pais || '—'}</td>
+          <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.iglesia}">${r.iglesia || '—'}</td>
+          <td>${bEstado(r.estado)}</td>
+          <td>${bPago(r.pago)}</td>
+          <td>${bAutorizacion(r.autorizado)}</td>
+        </tr>`).join('');
+    };
+
+    document.getElementById('dashContent').innerHTML = `
+
+      <!-- SECTION 2: MÉTRICAS ────────────────────────────── -->
+      <section class="section">
+        <h2 class="section-title">📊 Métricas principales</h2>
+        <div class="cards-grid">
+
+          <div class="card">
+            <div class="card-accent"></div>
+            <div class="card-label">Total inscritos</div>
+            <div class="card-value">${total}</div>
+            <div class="card-sub">de ${PLAZAS} plazas disponibles</div>
+            <div class="progress-wrap">
+              <div class="progress-track">
+                <div class="progress-fill" style="width:${pct}%"></div>
+              </div>
+              <div class="progress-label">
+                <span>${pct}% ocupado</span>
+                <span>${PLAZAS - total} libres</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-accent green"></div>
+            <div class="card-label">Confirmados</div>
+            <div class="card-value ok">${confirm}</div>
+            <div class="card-sub">Estado Confirmada o Hecho</div>
+          </div>
+
+          <div class="card">
+            <div class="card-accent ${pagoPend > 0 ? 'red' : 'green'}"></div>
+            <div class="card-label">Pagos pendientes</div>
+            <div class="card-value ${pagoPend > 0 ? 'alert' : 'ok'}">${pagoPend}</div>
+            <div class="card-sub">Sin confirmación de pago</div>
+          </div>
+
+          <div class="card">
+            <div class="card-accent ${autPend > 0 ? 'red' : 'green'}"></div>
+            <div class="card-label">Autorizaciones pendientes</div>
+            <div class="card-value ${autPend > 0 ? 'alert' : 'ok'}">${autPend}</div>
+            <div class="card-sub">Documentación sin entregar</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3: ESTADO INSCRIPCIONES ─────────────────── -->
+      <section class="section">
+        <h2 class="section-title">📋 Estado de inscripciones</h2>
+        <div class="status-card">
+          ${['Incompleta','Pendiente','Confirmada','Hecho'].map(est => {
+            const n   = byEstado[est] || 0;
+            const pct = total > 0 ? (n / total) * 100 : 0;
+            const col = ESTADO_COLOR[est] || '#999';
+            return `
+              <div class="bar-row">
+                <div class="bar-label">${est}</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:${pct}%;background:${col}">
+                    ${n > 0 ? n : ''}
+                  </div>
+                </div>
+                <div class="bar-count-label">${n}</div>
+              </div>`;
+          }).join('')}
+        </div>
+      </section>
+
+      <!-- SECTION 4: DISTRIBUCIÓN ─────────────────────────── -->
+      <section class="section">
+        <h2 class="section-title">🌍 Distribución</h2>
+        <div class="dist-grid">
+
+          <div class="dist-card">
+            <div class="dist-card-title">Por país</div>
+            ${distBars(byPais, ['#1a2744','#2e4a8a','#3d6abf','#5c8fd6','#84b0e8','#a8c8f0'], null)}
+          </div>
+
+          <div class="dist-card">
+            <div class="dist-card-title">Por grupo de edad</div>
+            ${distBars(byGrupo, ['#1565c0','#6a1b9a','#616161'],
+              ['Júnior (12-14)','Intermedio (15-17)','Adulto (18+)'])}
+          </div>
+
+          <div class="dist-card">
+            <div class="dist-card-title">Por género</div>
+            ${distBars(byGenero, ['#1a2744','#c9a84c','#888'])}
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: ALERTAS SANITARIAS ──────────────────── -->
+      <section class="section">
+        <h2 class="section-title">🏥 Alertas sanitarias</h2>
+        <div class="alerts-grid">
+
+          <div class="alert-card">
+            <div class="alert-head ah-red">
+              <span class="alert-title">⚠️ Alergia alimentaria</span>
+              <span class="count">${alergias.length}</span>
+            </div>
+            <div class="alert-body">
+              ${alertList(alergias, r => r.cualAlergia)}
+            </div>
+          </div>
+
+          <div class="alert-card">
+            <div class="alert-head ah-orange">
+              <span class="alert-title">🩺 Condición médica</span>
+              <span class="count">${conds.length}</span>
+            </div>
+            <div class="alert-body">
+              ${alertList(conds, r => r.condDesc)}
+            </div>
+          </div>
+
+          <div class="alert-card">
+            <div class="alert-head ah-blue">
+              <span class="alert-title">💊 Medicación habitual</span>
+              <span class="count">${meds.length}</span>
+            </div>
+            <div class="alert-body">
+              ${alertList(meds, r => r.medicDesc)}
+            </div>
+          </div>
+
+          <div class="alert-card">
+            <div class="alert-head ah-purple">
+              <span class="alert-title">🏊 No saben nadar</span>
+              <span class="count">${noNadan.length}</span>
+            </div>
+            <div class="alert-body">
+              ${alertList(noNadan, r => r.pais)}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 6: ESTADO DE PAGOS ──────────────────────── -->
+      <section class="section">
+        <h2 class="section-title">💳 Estado de pagos</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Participante</th>
+                <th>Método de pago</th>
+                <th>Estado pago</th>
+                <th>Estado inscripción</th>
+                <th>Completitud</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(() => {
+                const sorted = [...records].sort((a,b) => {
+                  const o = {'No':0,'Lo haré en los próximos 5 días':1,'Sí':2};
+                  return (o[a.pago]??0)-(o[b.pago]??0);
+                });
+                if (!sorted.length) return `<tr class="empty-row"><td colspan="5">Sin registros</td></tr>`;
+                return sorted.map(r => `
+                  <tr>
+                    <td><div class="td-name">${r.nombre||'—'}</div></td>
+                    <td>${r.metodoPago || <span style="color:#bbb">—</span>}</td>
+                    <td>${bPago(r.pago)}</td>
+                    <td>${bEstado(r.estado)}</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <div style="flex:1;background:#ede8de;border-radius:4px;height:6px;overflow:hidden">
+                          <div style="width:${r.completitud||0}%;height:100%;background:${(r.completitud||0)>=80?'#2e7d32':(r.completitud||0)>=50?'#c9a84c':'#e53935'};border-radius:4px"></div>
+                        </div>
+                        <span style="font-size:12px;font-weight:700;color:#888;width:32px;text-align:right">${r.completitud||0}%</span>
+                      </div>
+                    </td>
+                  </tr>`).join('');
+              })()}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 7: LISTA COMPLETA ───────────────────────── -->
+      <section class="section">
+        <h2 class="section-title">👥 Lista completa de inscritos <span style="font-size:14px;font-weight:500;color:#888;margin-left:8px">${total} registros</span></h2>
+        <div class="filter-row">
+          <select class="filter-select" id="fEstado" onchange="applyFilters()">
+            <option value="">Todos los estados</option>
+            <option value="Incompleta">Incompleta</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="Hecho">Hecho</option>
+          </select>
+          <select class="filter-select" id="fGrupo" onchange="applyFilters()">
+            <option value="">Todos los grupos</option>
+            <option value="Júnior (12-14)">Júnior (12-14)</option>
+            <option value="Intermedio (15-17)">Intermedio (15-17)</option>
+            <option value="Adulto (18+)">Adulto (18+)</option>
+          </select>
+          <select class="filter-select" id="fPais" onchange="applyFilters()">
+            <option value="">Todos los países</option>
+            ${[...new Set(records.map(r=>r.pais).filter(Boolean))].sort().map(p=>`<option value="${p}">${p}</option>`).join('')}
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Grupo</th>
+                <th>País</th>
+                <th>Iglesia</th>
+                <th>Estado</th>
+                <th>Pago</th>
+                <th>Autorización</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyInscritos">
+              ${tableRows(records)}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+
+    window.__tableRows = tableRows;
+  }
+
+  /* ── FILTROS ──────────────────────────────────────────────── */
+  function applyFilters() {
+    const est  = document.getElementById('fEstado')?.value || '';
+    const grp  = document.getElementById('fGrupo')?.value  || '';
+    const pais = document.getElementById('fPais')?.value   || '';
+
+    let filtered = window.__records || [];
+    if (est)  filtered = filtered.filter(r => r.estado === est);
+    if (grp)  filtered = filtered.filter(r => r.grupo  === grp);
+    if (pais) filtered = filtered.filter(r => r.pais   === pais);
+
+    const tbody = document.getElementById('tbodyInscritos');
+    if (tbody && window.__tableRows) tbody.innerHTML = window.__tableRows(filtered);
+  }
+
+  /* ── MAIN ─────────────────────────────────────────────────── */
+  async function loadDashboard() {
+    const btn = document.getElementById('btnRefresh');
+    if (btn) { btn.disabled = true; btn.classList.add('loading'); }
+
+    document.getElementById('dashContent').innerHTML = `
+      <div class="loading-box">
+        <div class="spinner"></div>
+        <span>Cargando datos desde Notion…</span>
+      </div>`;
+
+    try {
+      const pages   = await fetchAll();
+      const records = pages.map(parse);
+
+      render(records);
+
+      const now = new Date();
+      document.getElementById('lastUpdated').textContent =
+        'Actualizado: ' + now.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'})
+        + ' ' + now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+
+    } catch (err) {
+      document.getElementById('dashContent').innerHTML = `
+        <div class="error-box">
+          <strong>Error al conectar con Notion</strong>
+          ${err.message}<br><br>
+          <small>Asegúrate de que el servidor está corriendo: <strong>node server.js</strong></small>
+        </div>`;
+    } finally {
+      if (btn) { btn.disabled = false; btn.classList.remove('loading'); }
+    }
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>
