@@ -6,12 +6,148 @@
   <title>JISPE - CAMP 2026 · Campamento Juvenil Toledo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* ==========================================
+       INYECTANDO MEJORAS VISUALES MÓVILES (UX/UI)
+       ========================================== */
+
+    /* Optimización de las palabras clave en cursiva de tendencia */
+    em {
+      font-family: 'Playfair Display', Georgia, serif !important;
+      font-style: italic !important;
+      font-weight: 600 !important;
+      color: inherit;
+      border-bottom: 2px dashed rgba(0,0,0,0.15);
+      padding-bottom: 1px;
+    }
+
+    /* Contenedor de Desplazamiento Horizontal (Swipe Cards) para móviles */
+    @media (max-width: 768px) {
+      .exp-grid, .itin-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px !important;
+        padding: 10px 4px 25px 4px !important;
+        margin-right: -1rem; /* Permite que el scroll fluya fuera del contenedor base */
+      }
+      
+      /* Forzar a que las tarjetas ocupen un 85% para dejar asomar la siguiente */
+      .exp-grid .card, .itin-grid .day-card {
+        flex: 0 0 85% !important;
+        scroll-snap-align: start !important;
+        background: #ffffff;
+        border: 1px solid #eaeaea !important;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.04) !important;
+        border-radius: 12px !important;
+        margin: 0 !important;
+      }
+
+      /* Ocultar barra de scroll estética en navegadores */
+      .exp-grid::-webkit-scrollbar, .itin-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .exp-grid, .itin-grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+
+    /* Rediseño de Tarjeta de Inversión (Premium Pricing Card) */
+    .price-big {
+      background: #fdfbf7 !important; /* Tono arena suave de fondo */
+      border: 2px solid #111111 !important;
+      border-radius: 16px !important;
+      padding: 35px 25px !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06) !important;
+      max-width: 480px;
+      margin: 2rem auto 0 auto !important;
+    }
+    
+    .price-big .amount {
+      font-size: 3.8rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -1px;
+    }
+
+    .price-features {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 25px 0 !important;
+      text-align: left !important;
+    }
+
+    .price-features li {
+      margin-bottom: 14px !important;
+      font-size: 1.05rem !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+
+    .price-features li::before {
+      content: '✓' !important;
+      color: #2ecc71 !important;
+      font-weight: bold !important;
+      font-size: 1.2rem !important;
+    }
+
+    /* Botón de conversión crítico en móvil (Full width de pulgar) */
+    @media (max-width: 768px) {
+      .price-big .btn-primary {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100% !important;
+        padding: 1rem !important;
+        font-size: 1.1rem !important;
+        border-radius: 30px !important;
+      }
+    }
+
+    /* Mejoras de la zona activa de pulsación en los desplegables FAQ */
+    .faq-q {
+      width: 100% !important;
+      text-align: left !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 1.2rem 1rem !important;
+    }
+
+    .faq-item {
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .faq-item:hover {
+      background: rgba(0,0,0,0.01);
+    }
+
+    /* Rotación dinámica con microinteracción en el icono de FAQ */
+    .faq-item.open .icon {
+      transform: rotate(45deg) !important;
+      color: #e74c3c !important;
+    }
+    .icon {
+      transition: transform 0.25s ease, color 0.25s ease !important;
+    }
+
+    /* Espacio extra en el footer para evitar que la barra .mnav tape contenido */
+    @media (max-width: 768px) {
+      .footer {
+        padding-bottom: 120px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav">
     <div class="container">
       <a href="index.html" class="nav-logo">JISPE <span class="dot">-</span> CAMP<span class="dot">.</span> 2026</a>
@@ -24,7 +160,6 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-lines">
@@ -37,23 +172,23 @@
       <h1 class="hero-heading">JISPE <span class="dot">-</span><br>CAMP<span class="dot">.</span></h1>
       <p class="hero-sub">Una generación que se levanta</p>
       <div class="hero-stats">
-        <div><div class="hero-stat-n">3</div><div class="hero-stat-l">Días</div></div>
-        <div><div class="hero-stat-n">12–30</div><div class="hero-stat-l">Años</div></div>
+        <div><div class="hero-stat-n"><span class="count-up" data-target="3">0</span></div><div class="hero-stat-l">Días</div></div>
+        <div><div class="hero-stat-n"><span class="count-up" data-target="30" data-prefix="12–">12–0</span></div><div class="hero-stat-l">Años</div></div>
       </div>
       <p class="hero-desc">Un encuentro donde Dios restaura lo que parecía perdido. Este verano, las ruinas se convierten en propósito.</p>
       <div class="hero-cta">
-        <a href="inscripcion.html" class="btn">Inscribirme <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="inscripcion.html" class="btn btn-hero">Inscribirme <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
       <div class="hero-meta">31 jul — 2 ago · Toledo, España</div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section style="padding:6rem 0" class="fi">
     <div class="container">
       <p class="sl">La experiencia</p>
       <h2 class="st">No es solo un <em>campamento.</em></h2>
-      <p style="color:var(--text-2);max-width:560px;font-size:.95rem">Es el plan que tu verano necesitaba. Tres días de fe, comunidad y actividades para jóvenes de España y otros países.</p>
+      <p style="color:var(--text-2);max-width:560px;font-size:.95rem;margin-bottom:2rem;">Es el plan que tu verano necesitaba. Tres días de fe, comunidad y actividades para jóvenes de España y otros países.</p>
+      
       <div class="exp-grid">
         <div class="card"><div class="card-num">01</div><h3>Crecimiento espiritual</h3><p>Devocionales, adoración en vivo y espacios para conectar con Dios de verdad, sin prisas.</p></div>
         <div class="card"><div class="card-num">02</div><h3>Toledo de escenario</h3><p>Una ciudad patrimonio de la humanidad como telón de fondo. Difícil encontrar un sitio mejor.</p></div>
@@ -62,7 +197,6 @@
     </div>
   </section>
 
-  <!-- VERSE -->
   <section class="verse fi">
     <div class="container">
       <p class="verse-q">¡Vamos, anímense! ¡Reconstruyamos la muralla de Jerusalén para que ya nadie se burle de nosotros!</p>
@@ -70,11 +204,11 @@
     </div>
   </section>
 
-  <!-- PRICING -->
   <section style="padding:6rem 0" class="fi">
     <div class="container">
       <p class="sl">Inversión</p>
       <h2 class="st">150€ todo <em>incluido.</em></h2>
+      
       <div class="price-big">
         <div class="amount"><span class="cur">€</span>150</div>
         <p class="label">Por persona · Todo incluido</p>
@@ -84,16 +218,21 @@
           <li>Piscina y actividades</li>
           <li>Materiales incluidos</li>
         </ul>
-        <a href="inscripcion.html" class="btn" style="margin-top:1rem">Reservar mi plaza →</a>
+        
+        <div style="margin: 1.5rem 0; font-size: 0.85rem; color: #e67e22; font-weight: 600; text-align: center;">
+          ⚠️ Las plazas son limitadas. ¡Asegura la tuya hoy!
+        </div>
+        
+        <a href="inscripcion.html" class="btn btn-primary">Reservar mi plaza →</a>
       </div>
     </div>
   </section>
 
-  <!-- ITINERARY -->
   <section style="padding:6rem 0" class="fi">
     <div class="container">
       <p class="sl">Itinerario</p>
       <h2 class="st">3 días, una <em>experiencia.</em></h2>
+      
       <div class="itin-grid">
         <div class="day-card"><p class="day-card-l">Vie · 31 Jul</p><h3>Llegada y<br>bienvenida</h3></div>
         <div class="day-card"><p class="day-card-l">Sáb · 1 Ago</p><h3>Día completo</h3></div>
@@ -102,7 +241,6 @@
     </div>
   </section>
 
-  <!-- FAQ PREVIEW -->
   <section style="padding:6rem 0" class="fi" id="faq">
     <div class="container">
       <p class="sl">Preguntas frecuentes</p>
@@ -120,17 +258,15 @@
     </div>
   </section>
 
-  <!-- FINAL CTA -->
   <section class="fcta fi">
     <div class="container">
       <h2 class="st">¿Vienes o <em>qué?</em></h2>
       <p>Las plazas son limitadas y se acaban antes de lo que piensas. No te quedes fuera.</p>
-      <a href="inscripcion.html" class="btn">Inscribirme ahora →</a>
+      <a href="inscripcion.html" class="btn btn-hero">Inscribirme ahora →</a>
       <p class="fcta-meta">Plazas limitadas · 31 jul — 2 ago · Toledo, España</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-inner">
       <div><p class="footer-brand">JISPE <span class="dot">-</span> CAMP<span class="dot">.</span> 2026</p></div>
@@ -143,7 +279,6 @@
     </div>
   </footer>
 
-  <!-- MOBILE NAV -->
   <nav class="mnav">
     <div class="mnav-inner">
       <a href="index.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Inicio</a>
@@ -158,6 +293,37 @@
     document.querySelectorAll('.faq-q').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,o=i.classList.contains('open');document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));if(!o)i.classList.add('open')})});
     const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1});
     document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+
+    /* Counter-up al entrar en viewport, ease-out 800ms, respeta prefers-reduced-motion */
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const easeOut = t => 1 - Math.pow(1 - t, 3);
+      const animateCount = (el) => {
+        const target = parseInt(el.dataset.target, 10);
+        const prefix = el.dataset.prefix || '';
+        if (prefersReduced) { el.textContent = prefix + target; return; }
+        const duration = 800;
+        const start = performance.now();
+        const step = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const value = Math.floor(easeOut(progress) * target);
+          el.textContent = prefix + value;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = prefix + target;
+        };
+        requestAnimationFrame(step);
+      };
+      const counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target.dataset.counted) {
+            entry.target.dataset.counted = '1';
+            animateCount(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.count-up').forEach(el => counterObs.observe(el));
+    })();
   </script>
 </body>
 </html>
